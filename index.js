@@ -1,6 +1,5 @@
-const root = document.documentElement;
 const grid = document.getElementById('cards-grid');
-const overlay = document.getElementById('overlay');
+const overlay = document.querySelector('.overlay');
 const newBookBtn = document.getElementById('add');
 const newBookModal = document.getElementById('new-card-modal');
 const modalMessage = document.getElementById('modal-message');
@@ -21,16 +20,19 @@ const library = {
   store(book) {
     let titles = library.books.map(book => book.title);
     let info = library.books.map(book => book.info)
-    if (book.author == false) return 'Error: Book has no author';
+    if (book.title == false) book.title = 'Untitled Book';
+    if (book.author == false) book.author = 'Unknown Author';
     else if (titles.indexOf(book.title) != -1) {
-      return 'Error: Book with that name already exists';
+      return 'A book with that name already exists';
     }
     else if (info.indexOf(book.info) != -1) {
-      return 'Error: Book already exists';
+      return 'Book already exists';
     };
     library.createHTML(book);
     library.books.push(book);
-    return 'Book successfully created!';
+    newBookModal.classList.toggle('hidden');
+    overlay.classList.toggle('hidden');
+    return '';
   },
 
   remove(book) {
@@ -79,9 +81,14 @@ const library = {
     bookRead = document.createElement('div');
     bookRead.classList.add('card-read');
     bookInput = document.createElement('input');
-    bookInput.textContent = 'Read';
+    bookInput.addEventListener('click', (e) => {
+      bookHTML.classList.toggle('read');
+    })
+    bookInputText = document.createElement('p');
+    bookInputText.textContent = 'Read';
     bookInput.type = 'checkbox';
     bookRead.appendChild(bookInput);
+    bookRead.appendChild(bookInputText);
 
     bookFooter.appendChild(bookDel);
     bookFooter.appendChild(bookRead);
@@ -109,6 +116,7 @@ form.addEventListener('submit', (e) => {
   let formData = new FormData(form);
   book = new Book(...formData.values());
   modalMessage.textContent = library.store(book);
+  form.reset();
 });
 
 sidebarHidden.addEventListener('click', (e) => {

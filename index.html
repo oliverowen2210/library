@@ -10,7 +10,7 @@
 </head>
 <body>
   <div id='wrapper'>
-    <div class='hidden' id='overlay'></div>
+    <div class='hidden overlay'></div>
     <div class='sidebar hidden' id='main-sidebar'>
       <div id='sidebar-box'>
       </div>
@@ -35,29 +35,30 @@
       </div>
       <div id=cards-wrapper>
         <div id='cards-grid'></div>
-        <div class='hidden' id='new-card-modal'>
-          <fieldset id='new-card-fieldset'>
-            <div id='modal-header'>
-              <p>New Book</p>
-              <button id='close-modal'>X</button>
-            </div>
-            <form id='new-card-form'>
-              <label for='new-card-title'> Title:</label>
-              <input type='text' name='new-card-title' maxlength = '20'>
-              <label for='new-card-author'> Author:</label>
-              <input type='text' name='new-card-author' maxlength = '20'>
-              <label for='new-card-info'> Description:</label>
-              <textarea name='new-card-info' rows='8' cols='30'></textarea>
-              <div id='modal-message'></div>
-              <input type='submit'>
-            </form>
-         </fieldset>
-        </div>
+          <div class='hidden' id='new-card-modal'>
+            <fieldset id='new-card-fieldset'>
+              <div id='modal-header'>
+                <p>New Book</p>
+                <button id='close-modal'>X</button>
+              </div>
+              <form id='new-card-form'>
+                <label for='new-card-title'> Title:</label>
+                <input type='text' name='new-card-title' maxlength = '30'>
+                <label for='new-card-author'> Author:</label>
+                <input type='text' name='new-card-author' maxlength = '20'>
+                <label for='new-card-info'> Description:</label>
+                <textarea name='new-card-info' rows='8' cols='30'></textarea>
+                <div id='modal-message'></div>
+                <input type='submit'>
+              </form>
+          </fieldset>
+          </div>
       </div>
       <div id='footer'>
         <p id='plug'><a href='https://github.com/oliverowen2210'>made by oliverowen2210</a></p>
       </div>
     </div>
+    <div class='sidebar' id='right-sidebar'></div>
   </div>
 </body>
 </html>
