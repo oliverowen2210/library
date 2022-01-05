@@ -17,6 +17,13 @@ function Book(title='Default', author='Unknown', info='') {
 const library = {
   books: [],
 
+  displaybooks() {
+    for (let book of library.books) {
+      library.removeHTML(book);
+      grid.appendChild(library.createHTML(book));
+    };
+  },
+
   store(book) {
     let titles = library.books.map(book => book.title);
     let info = library.books.map(book => book.info)
@@ -28,16 +35,13 @@ const library = {
     else if (info.indexOf(book.info) != -1) {
       return 'Book already exists';
     };
-    library.createHTML(book);
     library.books.push(book);
-    newBookModal.classList.toggle('hidden');
-    overlay.classList.toggle('hidden');
     return '';
   },
 
-  remove(book) {
-    library.books.splice(library.books.indexOf(book), 1);
+  removeHTML(book) {
     thisBook = document.getElementById(`${book.title}`);
+    if (!thisBook) return;
     while (thisBook.hasChildNodes()) {
       thisBook.removeChild(thisBook.lastChild)
     };
@@ -74,7 +78,9 @@ const library = {
     bookDel = document.createElement('button');
     bookDel.classList.add('card-delete');
     bookDel.addEventListener('click', (e) => {
-      library.remove(book);
+      library.books.splice(library.books.indexOf(book), 1);
+      library.removeHTML(book);
+      library.displaybooks();
     })
     bookDel.textContent = 'Delete';
 
@@ -97,7 +103,7 @@ const library = {
     bookHTML.appendChild(bookContent);
     bookHTML.appendChild(bookFooter);
 
-    grid.appendChild(bookHTML);
+    return bookHTML;
   },
 };
 
@@ -114,9 +120,14 @@ closeModalBtn.addEventListener('click', (e) => {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   let formData = new FormData(form);
-  book = new Book(...formData.values());
+  let book = new Book(...formData.values());
   modalMessage.textContent = library.store(book);
-  form.reset();
+  if (modalMessage.textContent == '') {
+    newBookModal.classList.toggle('hidden');
+    overlay.classList.toggle('hidden');
+    form.reset();
+    library.displaybooks();
+  };
 });
 
 sidebarHidden.addEventListener('click', (e) => {
