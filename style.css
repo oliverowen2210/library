@@ -148,6 +148,7 @@ h1 {
 .card-header {
   overflow: auto;
   border-bottom: 2px solid black;
+  min-height: 10vh;
 }
 
 .card-title {
@@ -217,7 +218,7 @@ h1 {
 }
 
 #footer {
-  background: lightgray;
+  background: rgb(211, 211, 211);
   min-height: 40px;
   max-height: 40px;
   display: flex;
