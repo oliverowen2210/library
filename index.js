@@ -8,10 +8,19 @@ const closeModalBtn = document.getElementById('close-modal');
 const sidebar = document.getElementById('main-sidebar');
 const sidebarHidden = document.getElementById('hidden-sidebar');
 
-function Book(title='Default', author='Unknown', info='') {
-  this.title = title;
-  this.author = author;
-  this.info = info;
+class Book {
+  constructor(title='Default', author='Unknown', info='') {
+    this.title = title;
+    this.author = author;
+    this.info = info;
+  };
+  set HTML(h) {
+    this._html = h
+  }
+  toggleRead() {
+    this._html.classList.toggle('read');
+  }
+
 };
 
 const library = {
@@ -39,17 +48,9 @@ const library = {
     return '';
   },
 
-  removeHTML(book) {
-    thisBook = document.getElementById(`${book.title}`);
-    if (!thisBook) return;
-    while (thisBook.hasChildNodes()) {
-      thisBook.removeChild(thisBook.lastChild)
-    };
-    grid.removeChild(thisBook);
-  },
-
   createHTML(book) {
     bookHTML = document.createElement('div');
+    book.HTML = bookHTML;
     bookHTML.classList.add('card');
     bookHTML.id = book.title
 
@@ -88,7 +89,7 @@ const library = {
     bookRead.classList.add('card-read');
     bookInput = document.createElement('input');
     bookInput.addEventListener('click', (e) => {
-      bookHTML.classList.toggle('read');
+      book.toggleRead();
     })
     bookInputText = document.createElement('p');
     bookInputText.textContent = 'Read';
@@ -104,6 +105,15 @@ const library = {
     bookHTML.appendChild(bookFooter);
 
     return bookHTML;
+  },
+
+  removeHTML(book) {
+    thisBook = document.getElementById(`${book.title}`);
+    if (!thisBook) return;
+    while (thisBook.hasChildNodes()) {
+      thisBook.removeChild(thisBook.lastChild)
+    };
+    grid.removeChild(thisBook);
   },
 };
 
